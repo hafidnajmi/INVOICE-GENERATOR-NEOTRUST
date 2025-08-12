@@ -1,75 +1,128 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Form Input Data Invoice</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-        }
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input, select, textarea, button {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        textarea {
-            resize: vertical;
-        }
-        .btn-submit {
-            background-color: #5cb85c;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-submit:hover {
-            background-color: #4cae4c;
-        }
-        .customer-row {
-            display: flex;
-            gap: 10px;
-        }
-        .btn-reset {
-            background-color: #d9534f;
-            color: white;
-            border: none;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-        .btn-reset:hover {
-            background-color: #c9302c;
-        }
-        #response-message {
-            margin-top: 20px;
-            font-weight: bold;
-            color: green;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Form Input Data Invoice</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    input, select, textarea, button {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    textarea {
+        resize: vertical;
+    }
+    button {
+        cursor: pointer;
+    }
+    .btn-submit {
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        margin-top: 10px;
+    }
+    .btn-submit:hover {
+        background-color: #4cae4c;
+    }
+    .btn-preview {
+        background-color: #0275d8;
+        color: white;
+        border: none;
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+    .btn-preview:hover {
+        background-color: #025aa5;
+    }
+    #response-message {
+        margin-top: 20px;
+        font-weight: bold;
+        color: green;
+    }
+    #invoice-preview {
+        background: white;
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+    table, th, td {
+        border: 1px solid black;
+    }
+    th, td {
+        padding: 6px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .right {
+        text-align: right;
+    }
+    .prepared {
+        margin-top: 60px;
+        margin-bottom: 50px;
+    }
+    .passenger-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .passenger-row > input {
+        flex: 1;
+    }
+    .passenger-row > button {
+        flex: 0 0 30px;
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .passenger-row > button:hover {
+        background-color: #c9302c;
+    }
+</style>
 </head>
 <body>
 
@@ -88,17 +141,15 @@
 
     <div class="form-group">
         <label for="customer-name">To (Customer Name)</label>
-        <div class="customer-row">
-            <select id="customer-name" onchange="updateCustomerAddress()">
-                <option value="">Pilih Customer</option>
-                <option value="PT Alpha">PT Alpha</option>
-                <option value="PT Beta">PT Beta</option>
-                <option value="PT Gamma">PT Gamma</option>
-                <option value="Custom">Custom</option>
-            </select>
-            <input type="text" id="custom-customer-name" style="display:none" placeholder="Masukkan Nama Customer" />
-            <button id="reset-customer" class="btn-reset" style="display:none" onclick="resetCustomer()">Reset</button>
-        </div>
+        <select id="customer-name" onchange="updateCustomerAddress()">
+            <option value="">Pilih Customer</option>
+            <option value="PT Alpha">PT Alpha</option>
+            <option value="PT Beta">PT Beta</option>
+            <option value="PT Gamma">PT Gamma</option>
+            <option value="Custom">Custom</option>
+        </select>
+        <input type="text" id="custom-customer-name" style="display:none; margin-top:8px;" placeholder="Masukkan Nama Customer" />
+        <button id="reset-customer" style="display:none; margin-top:8px;" onclick="resetCustomer()">Reset Customer</button>
     </div>
 
     <div class="form-group">
@@ -111,127 +162,276 @@
         <input type="text" id="invoice-no" placeholder="Masukkan nomor invoice" />
     </div>
 
-    <div class="form-group">
-        <label for="passenger-name">Passenger Name</label>
-        <input type="text" id="passenger-name" placeholder="Nama Penumpang" />
-    </div>
+    <h3>Passenger / Produk</h3>
+    <div id="passengers-container"></div>
+    <button type="button" onclick="addPassengerRow()" style="margin-bottom: 20px;">Tambah Penumpang / Produk</button>
 
     <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" rows="4" placeholder="Deskripsi"></textarea>
+        <label for="service-fee">Service Fee (Rp)</label>
+        <input type="number" id="service-fee" placeholder="Masukkan service fee" value="0" min="0" />
     </div>
 
-    <div class="form-group">
-        <label for="airline">Airline</label>
-        <input type="text" id="airline" placeholder="Nama Maskapai" />
+    <div>
+        <button class="btn-preview" onclick="previewInvoice()">Preview Invoice</button>
+        <button class="btn-submit" onclick="submitInvoice()">Submit Invoice</button>
     </div>
-
-    <div class="form-group">
-        <label for="ticket-no">Ticket No</label>
-        <input type="text" id="ticket-no" placeholder="Nomor Tiket" />
-    </div>
-
-    <div class="form-group">
-        <label for="fare">Fare</label>
-        <input type="number" id="fare" placeholder="Input tariff manually" />
-    </div>
-
-    <button class="btn-submit" onclick="generateInvoice()">Generate Invoice</button>
 
     <div id="response-message"></div>
 </div>
 
+<div id="invoice-preview"></div>
+
 <script>
-    // Data customer dan alamat
+    // Customer data
     const customerData = {
         "PT Alpha": "Alamat PT Alpha",
         "PT Beta": "Alamat PT Beta",
         "PT Gamma": "Alamat PT Gamma"
     };
 
-    // Auto isi tanggal hari ini
-    document.getElementById('date').valueAsDate = new Date();
-
-    // Auto isi tanggal hari ini dan due date + 7
+    // Auto set date and due date
     const dateInput = document.getElementById('date');
     const dueDateInput = document.getElementById('due-date');
-
-    function setDueDate() {
-        if (dateInput.value) {
-            const date = new Date(dateInput.value);
-            date.setDate(date.getDate() + 7);
-            dueDateInput.valueAsDate = date;
-        }
-    }
-
-    // Saat halaman load
     dateInput.valueAsDate = new Date();
     setDueDate();
-
-    // Update due date kalau date diganti
     dateInput.addEventListener('change', setDueDate);
 
-    // Update alamat customer saat dropdown berubah
-    function updateCustomerAddress() {
-        const selectElement = document.getElementById('customer-name');
-        const customInput = document.getElementById('custom-customer-name');
-        const customerName = selectElement.value;
-        const customerAddress = document.getElementById('customer-address');
-        const resetButton = document.getElementById('reset-customer');
-
-        if (customerName === "Custom") {
-            selectElement.style.display = 'none';
-            customInput.style.display = 'block';
-            customInput.focus();
-            customerAddress.readOnly = false;
-            customerAddress.value = '';
-            resetButton.style.display = 'inline-block';
-        } else {
-            selectElement.style.display = 'block';
-            customInput.style.display = 'none';
-            customerAddress.readOnly = true;
-            customerAddress.value = customerData[customerName] || '';
-            resetButton.style.display = 'none';
+    function setDueDate() {
+        if(dateInput.value){
+            let dt = new Date(dateInput.value);
+            dt.setDate(dt.getDate() + 7);
+            dueDateInput.valueAsDate = dt;
         }
     }
 
-    // Reset kembali ke default pilihan customer
-    function resetCustomer() {
-        document.getElementById('customer-name').style.display = 'block';
-        document.getElementById('customer-name').value = '';
-        document.getElementById('custom-customer-name').style.display = 'none';
-        document.getElementById('custom-customer-name').value = '';
-        document.getElementById('customer-address').value = '';
-        document.getElementById('customer-address').readOnly = true;
-        document.getElementById('reset-customer').style.display = 'none';
+    // Update customer address
+    function updateCustomerAddress() {
+        const select = document.getElementById('customer-name');
+        const customInput = document.getElementById('custom-customer-name');
+        const address = document.getElementById('customer-address');
+        const resetBtn = document.getElementById('reset-customer');
+        const val = select.value;
+
+        if(val === 'Custom'){
+            select.style.display = 'none';
+            customInput.style.display = 'block';
+            customInput.focus();
+            address.readOnly = false;
+            address.value = '';
+            resetBtn.style.display = 'inline-block';
+        } else {
+            select.style.display = 'block';
+            customInput.style.display = 'none';
+            address.readOnly = true;
+            address.value = customerData[val] || '';
+            resetBtn.style.display = 'none';
+        }
     }
 
-    // Generate dan submit invoice ke webhook n8n
-    async function generateInvoice() {
+    // Reset customer select
+    function resetCustomer() {
+        const select = document.getElementById('customer-name');
+        const customInput = document.getElementById('custom-customer-name');
+        const address = document.getElementById('customer-address');
+        const resetBtn = document.getElementById('reset-customer');
+
+        select.style.display = 'block';
+        select.value = '';
+        customInput.style.display = 'none';
+        customInput.value = '';
+        address.readOnly = true;
+        address.value = '';
+        resetBtn.style.display = 'none';
+    }
+
+    // Add initial passenger row
+    const passengersContainer = document.getElementById('passengers-container');
+    addPassengerRow();
+
+    // Function to add passenger/produk input row
+    function addPassengerRow(data = {}) {
+        const div = document.createElement('div');
+        div.className = 'passenger-row';
+
+        div.innerHTML = `
+            <input type="text" placeholder="Nama Penumpang / Produk" class="passenger-name" value="${data.passenger_name || ''}" required />
+            <input type="text" placeholder="Deskripsi" class="description" value="${data.description || ''}" />
+            <input type="text" placeholder="Maskapai" class="airline" value="${data.airline || ''}" />
+            <input type="text" placeholder="Nomor Tiket" class="ticket-no" value="${data.ticket_no || ''}" />
+            <input type="number" placeholder="Tarif (Rp)" class="fare passenger-fare" min="0" value="${data.fare || ''}" required />
+            <button type="button" onclick="removePassengerRow(this)">×</button>
+        `;
+
+        passengersContainer.appendChild(div);
+    }
+
+    // Remove passenger row
+    function removePassengerRow(btn) {
+        passengersContainer.removeChild(btn.parentElement);
+    }
+
+    // Hitung total tarif semua penumpang
+    function calculateTotals() {
+        const fareInputs = document.querySelectorAll('.passenger-fare');
+        let totalFare = 0;
+        fareInputs.forEach(input => {
+            totalFare += Number(input.value) || 0;
+        });
+        const serviceFee = Number(document.getElementById('service-fee').value) || 0;
+        const grandTotal = totalFare + serviceFee;
+        return { totalFare, serviceFee, grandTotal };
+    }
+
+    // Render invoice preview
+    function renderInvoicePreview(data) {
+        let passengerRowsHtml = '';
+        data.passengers.forEach((p, i) => {
+            passengerRowsHtml += `
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${p.passenger_name}</td>
+                    <td>${p.description}</td>
+                    <td>${p.airline}</td>
+                    <td>${p.ticket_no}</td>
+                    <td class="right">${Number(p.fare).toLocaleString('id-ID')}</td>
+                </tr>
+            `;
+        });
+
+        const invoiceHtml = `
+            <div style="font-family: Arial, sans-serif; font-size:14px; margin: 20px;">
+                <div style="text-align:left; margin-bottom: 20px;">
+                    <img src="https://drive.google.com/uc?export=view&id=11IT2mQu24QjycJwdPCPDdNRnO5W2xDNQ" alt="Logo" style="width:120px; height:auto;" />
+                </div>
+                <div style="text-align:center; font-weight:bold; font-size:18px; margin-bottom: 20px;">
+                    TRAVEL SERVICE INVOICE
+                </div>
+
+                <div>
+                    <p>Date: ${data.date}</p>
+                    <p>Due Date: ${data.due_date}</p>
+                </div>
+
+                <div>
+                    <p>To: <strong>${data.customer_name}</strong></p>
+                    <p>${data.customer_address}</p>
+                    <p>Invoice No: <strong>${data.invoice_number}</strong></p>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NAME OF PASSENGER</th>
+                            <th>DESCRIPTION</th>
+                            <th>AIRLINES</th>
+                            <th>TICKET NO</th>
+                            <th class="right">TOTAL FARE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${passengerRowsHtml}
+                    </tbody>
+                </table>
+
+                <table style="margin-top: 10px; width: 50%; float: right;">
+                    <tr>
+                        <td class="total">TOTAL</td>
+                        <td class="right">Rp ${data.totalFare.toLocaleString('id-ID')}</td>
+                    </tr>
+                    <tr>
+                        <td class="total">SERVICE FEE</td>
+                        <td class="right">Rp ${data.serviceFee.toLocaleString('id-ID')}</td>
+                    </tr>
+                    <tr>
+                        <td class="total">GRAND TOTAL</td>
+                        <td class="right">Rp ${data.grandTotal.toLocaleString('id-ID')}</td>
+                    </tr>
+                </table>
+
+                <div style="clear: both;"></div>
+
+                <div class="prepared">
+                    <p style="margin-top: 60px; margin-bottom: 30px;"><strong>Prepared by:</strong></p>
+                    <p style="margin-top: 10px; margin-bottom: 50px;"><strong>(Lilis)</strong></p>
+                    <p>PAYMENT</p>
+                    <p>MAYBANK: A/C 2737.000.566(IDR)</p>
+                    <p>BENEFICIARY: PT PRATAMA ALHABINA WISATA</p>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('invoice-preview').innerHTML = invoiceHtml;
+    }
+
+    // Ambil data form ke objek
+    function getFormData() {
         const customerNameSelect = document.getElementById('customer-name');
         const customInput = document.getElementById('custom-customer-name');
         const customerName = customerNameSelect.style.display === 'none' ? customInput.value.trim() : customerNameSelect.value.trim();
 
-        const data = {
+        // Kumpulkan data penumpang
+        const passengerRows = document.querySelectorAll('.passenger-row');
+        const passengers = [];
+        passengerRows.forEach(row => {
+            const pName = row.querySelector('.passenger-name').value.trim();
+            const desc = row.querySelector('.description').value.trim();
+            const airline = row.querySelector('.airline').value.trim();
+            const ticketNo = row.querySelector('.ticket-no').value.trim();
+            const fare = row.querySelector('.fare').value.trim();
+
+            if(pName && fare){
+                passengers.push({
+                    passenger_name: pName,
+                    description: desc,
+                    airline: airline,
+                    ticket_no: ticketNo,
+                    fare: Number(fare)
+                });
+            }
+        });
+
+        const { totalFare, serviceFee, grandTotal } = calculateTotals();
+
+        return {
             date: document.getElementById('date').value,
             due_date: document.getElementById('due-date').value,
             customer_name: customerName,
             customer_address: document.getElementById('customer-address').value.trim(),
             invoice_number: document.getElementById('invoice-no').value.trim(),
-            passenger_name: document.getElementById('passenger-name').value.trim(),
-            description: document.getElementById('description').value.trim(),
-            airline: document.getElementById('airline').value.trim(),
-            ticket_no: document.getElementById('ticket-no').value.trim(),
-            fare: document.getElementById('fare').value.trim()
+            passengers: passengers,
+            totalFare: totalFare,
+            serviceFee: serviceFee,
+            grandTotal: grandTotal
         };
+    }
 
-        // Validasi minimal untuk fare dan customer name
-        if (!customerName) {
+    // Preview button handler
+    function previewInvoice() {
+        const data = getFormData();
+
+        if(!data.customer_name){
             alert("Mohon pilih atau isi nama customer.");
             return;
         }
-        if (!data.fare) {
-            alert("Mohon isi tarif (fare) terlebih dahulu.");
+        if(data.passengers.length === 0){
+            alert("Mohon isi minimal 1 penumpang/produk dengan tarif.");
+            return;
+        }
+
+        renderInvoicePreview(data);
+    }
+
+    // Submit invoice ke webhook n8n
+    async function submitInvoice() {
+        const data = getFormData();
+
+        if(!data.customer_name){
+            alert("Mohon pilih atau isi nama customer.");
+            return;
+        }
+        if(data.passengers.length === 0){
+            alert("Mohon isi minimal 1 penumpang/produk dengan tarif.");
             return;
         }
 
@@ -240,8 +440,7 @@
         responseMessage.textContent = 'Mengirim data...';
 
         try {
-            // Ganti URL ini dengan URL webhook n8n kamu
-            const webhookUrl = 'https://n8n-mwjjuprcz1ho.ciluba.sumopod.my.id/webhook-test/webhook-test/invoice';
+            const webhookUrl = 'https://n8n-mwjjuprcz1ho.ciluba.sumopod.my.id/webhook-test/webhook-test/invoice'; // ganti sesuai webhook kamu
 
             const response = await fetch(webhookUrl, {
                 method: 'POST',
@@ -249,14 +448,13 @@
                 body: JSON.stringify(data),
             });
 
-            if (!response.ok) {
+            if(!response.ok){
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const result = await response.json();
 
-            // Tampilkan pesan sukses dan link download PDF kalau ada di response
-            if (result.pdfLink) {
+            if(result.pdfLink){
                 responseMessage.style.color = 'green';
                 responseMessage.innerHTML = `Invoice berhasil dibuat! <a href="${result.pdfLink}" target="_blank">Download PDF</a>`;
             } else {
@@ -273,6 +471,3 @@
 
 </body>
 </html>
-
-
-
